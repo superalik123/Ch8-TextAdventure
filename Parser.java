@@ -61,6 +61,7 @@ public class Parser
      */
     public void showCommands()
     {
+        System.out.println("Your commands are:");
         commands.showAll();
     }
 }

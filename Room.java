@@ -20,17 +20,20 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> exits;        // stores exits of this room.
-
+    private Item roomItem;
+    private Item roomItem2;                      // stores items of this room.
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
-     * "an open court yard".
+     * "an open court yard". Also stores an item.
      * @param description The room's description.
      */
-    public Room(String description) 
+    public Room(String description, Item roomItem, Item roomItem2) 
     {
         this.description = description;
         exits = new HashMap<String, Room>();
+        this.roomItem = roomItem;
+        this.roomItem2 = roomItem2;
     }
 
     /**
@@ -47,9 +50,9 @@ public class Room
      * @return The short description of the room
      * (the one that was defined in the constructor).
      */
-    public String getShortDescription()
+    public String getLongDescription()
     {
-        return description;
+        return description+".\n"+roomItem.getItemDescription()+roomItem2.getItemDescription()+getExitString();
     }
 
     /**
@@ -58,19 +61,21 @@ public class Room
      *     Exits: north west
      * @return A long description of this room
      */
-    public String getLongDescription()
+    public String getShortDescription()
     {
-        return "You are " + description + ".\n" + getExitString();
+        return description + ".\n" + roomItem.getItemShortDescription()
+        +".\n" +getExitString();
     }
 
     /**
-     * Return a string describing the room's exits, for example
+     * Return a string describing the room's exits and items, for example
      * "Exits: north west".
      * @return Details of the room's exits.
      */
     private String getExitString()
     {
         String returnString = "Exits:";
+        
         Set<String> keys = exits.keySet();
         for(String exit : keys) {
             returnString += " " + exit;
